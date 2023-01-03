@@ -1,10 +1,8 @@
 object PresentationVersions {
     const val coreVersion = "1.7.0"
     const val constraintLayoutVersion = "2.0.4"
-    const val lottieVersion = "3.5.0"
     const val composeVersion = "1.0.4"
     const val imageWorkerVersion = "1.2.0"
-    const val leakCanaryVersion = "2.7"
     const val navigationComposeVersion = "2.4.0-beta02"
     const val hiltNavigationFragment = "1.0.0"
     const val pagingComposeVersion = "1.0.0-alpha13"
@@ -32,9 +30,6 @@ object PresentationDependencies {
     private const val activityCompose =
         "androidx.activity:activity-compose:${GlobalVersions.activityVersion}"
 
-    private const val lottie =
-        "com.airbnb.android:lottie:${PresentationVersions.lottieVersion}"
-
     private const val composeUi =
         "androidx.compose.ui:ui:${PresentationVersions.composeVersion}"
 
@@ -59,9 +54,6 @@ object PresentationDependencies {
     private const val composeAnimation =
         "androidx.compose.animation:animation:${PresentationVersions.composeVersion}"
 
-    private const val leakCanary =
-        "com.squareup.leakcanary:leakcanary-android:${PresentationVersions.leakCanaryVersion}"
-
     private const val pagingCompose =
         "androidx.paging:paging-compose:${PresentationVersions.pagingComposeVersion}"
 
@@ -71,10 +63,11 @@ object PresentationDependencies {
     private const val coilCompose =
         "io.coil-kt:coil-compose:${PresentationVersions.coilVersion}"
 
+    private const val composeRuntimeLiveData =
+        "androidx.compose.runtime:runtime-livedata:1.0.0-beta01"
 
     val dependencyNotation = arrayOf(
         Pair(DependencyConfiguration.IMPLEMENTATION, GlobalDependencies.core),
-        Pair(DependencyConfiguration.IMPLEMENTATION, lottie),
         Pair(DependencyConfiguration.IMPLEMENTATION, GlobalDependencies.activity),
         Pair(DependencyConfiguration.IMPLEMENTATION, activityCompose),
         Pair(DependencyConfiguration.IMPLEMENTATION, fragment),
@@ -91,23 +84,20 @@ object PresentationDependencies {
         Pair(DependencyConfiguration.IMPLEMENTATION, hiltNavigationFragment),
         Pair(DependencyConfiguration.IMPLEMENTATION, GlobalDependencies.navigationUi),
         Pair(DependencyConfiguration.IMPLEMENTATION, GlobalDependencies.glide),
-        Pair(DependencyConfiguration.IMPLEMENTATION, GlobalDependencies.glideOkHttpIntegration),
         Pair(DependencyConfiguration.IMPLEMENTATION, GlobalDependencies.material),
         Pair(DependencyConfiguration.IMPLEMENTATION, GlobalDependencies.javaxInject),
         Pair(DependencyConfiguration.IMPLEMENTATION, composeUi),
         Pair(DependencyConfiguration.DEBUG_IMPLEMENTATION, composeUiTooling),
         Pair(DependencyConfiguration.IMPLEMENTATION, composeUiToolingPreview),
         Pair(DependencyConfiguration.IMPLEMENTATION, composeRuntime),
+        Pair(DependencyConfiguration.IMPLEMENTATION, composeRuntimeLiveData),
         Pair(DependencyConfiguration.IMPLEMENTATION, composeMaterial),
         Pair(DependencyConfiguration.IMPLEMENTATION, composeFoundation),
         Pair(DependencyConfiguration.IMPLEMENTATION, composeCompiler),
         Pair(DependencyConfiguration.IMPLEMENTATION, composeAnimation),
         Pair(DependencyConfiguration.IMPLEMENTATION, coil),
         Pair(DependencyConfiguration.IMPLEMENTATION, coilCompose),
-        Pair(DependencyConfiguration.IMPLEMENTATION, GlobalDependencies.pagingCommon),
-        Pair(DependencyConfiguration.IMPLEMENTATION, GlobalDependencies.pagingRuntime),
         Pair(DependencyConfiguration.IMPLEMENTATION, pagingCompose),
-        Pair(DependencyConfiguration.DEBUG_IMPLEMENTATION, leakCanary),
         Pair(DependencyConfiguration.IMPLEMENTATION, GlobalDependencies.hiltAndroid),
         Pair(DependencyConfiguration.ANNOTATION_PROCESSING, GlobalDependencies.hiltCompiler),
 
@@ -117,5 +107,5 @@ object PresentationDependencies {
         Pair(DependencyConfiguration.TEST_IMPLEMENTATION, GlobalDependencies.mockito),
         Pair(DependencyConfiguration.TEST_IMPLEMENTATION, GlobalDependencies.coreArchTesting),
         Pair(DependencyConfiguration.TEST_IMPLEMENTATION, GlobalDependencies.coroutinesTest),
-        )
+    )
 }

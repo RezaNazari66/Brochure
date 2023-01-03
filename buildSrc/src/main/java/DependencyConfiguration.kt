@@ -15,7 +15,7 @@ interface BaseDependencyConfiguration {
 
 object DependencyConfiguration : BaseDependencyConfiguration {
     override val IMPLEMENTATION = "implementation"
-    val DEBUG_IMPLEMENTATION = "debugImplementation"
+    const val DEBUG_IMPLEMENTATION = "debugImplementation"
     override val IMPLEMENTATION_PLATFORM = "implementationPlatform"
     override val API = "api"
     override val TEST_API = "testImplementation"

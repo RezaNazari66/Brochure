@@ -17,11 +17,6 @@ object BuildTypes {
 
     object Debug: DefaultBuildTypeConfig() {
         override val name: String = "debug"
-        override val configs: List<Triple<String, String, String>>
-            get() = listOf(
-                Triple("int", "DATABASE_VERSION", "1"),
-                Triple("String", "SCHEMA_NAME", "\"crypto_db\"")
-            )
     }
 
     object Release: DefaultBuildTypeConfig() {

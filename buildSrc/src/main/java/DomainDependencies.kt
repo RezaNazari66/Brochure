@@ -4,7 +4,6 @@ object DomainDependencies {
         Pair(DependencyConfiguration.IMPLEMENTATION, GlobalDependencies.kotlinConfig),
         Pair(DependencyConfiguration.IMPLEMENTATION, GlobalDependencies.javaxInject),
         Pair(DependencyConfiguration.IMPLEMENTATION, GlobalDependencies.coroutines),
-        Pair(DependencyConfiguration.IMPLEMENTATION, GlobalDependencies.pagingCommon),
         Pair(DependencyConfiguration.TEST_IMPLEMENTATION, GlobalDependencies.junit),
         Pair(DependencyConfiguration.TEST_IMPLEMENTATION, GlobalDependencies.coreTestingKtx),
         Pair(DependencyConfiguration.TEST_IMPLEMENTATION, GlobalDependencies.coreTesting),

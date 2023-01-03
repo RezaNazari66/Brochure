@@ -12,6 +12,7 @@
         android:layout_height="170dp"
         app:layout_constraintBottom_toTopOf="@+id/titleTextView"
         app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="8dp"
         app:layout_constraintStart_toStartOf="parent"
         android:contentDescription="@string/brochure_picture"
         app:layout_constraintTop_toTopOf="parent"

@@ -1,4 +1,4 @@
-package com.bonial.bronchurelist
+package com.bonial.bronchurelist.xmlui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,6 +11,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
+import com.bonial.bronchurelist.*
 import com.bonial.bronchurelist.databinding.FragmentBrochureListBinding
 import com.bonial.domain.models.Brochure
 import com.bonial.domain.models.ContentTypeEnum

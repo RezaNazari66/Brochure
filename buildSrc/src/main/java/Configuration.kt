@@ -18,8 +18,7 @@ object Configuration {
     const val googleServiceVersion = "4.3.3"
     const val analyticVersion = "2.2.1"
     const val versionCode = VersionConfiguration.buildNumber
-    const val versionName =
-        "${VersionConfiguration.versionMajor}.${VersionConfiguration.versionMinor}.${VersionConfiguration.versionPatch}"
+    const val versionName = "${VersionConfiguration.versionMajor}.${VersionConfiguration.versionMinor}.${VersionConfiguration.versionPatch}"
     const val projectName = "Brochures"
     private const val appIdPrefix = "com.bonial"
     const val applicationId = "$appIdPrefix.brochures"

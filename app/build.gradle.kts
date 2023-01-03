@@ -67,7 +67,7 @@ dependencies {
     implementation(project(":domain"))
     implementation(project(":features:brochureList"))
 
-    CoreDependencies.dependencyNotation.forEach {
+    AppDependencies.dependencyNotation.forEach {
         this.add(it.first, it.second)
     }
 }

@@ -3,7 +3,6 @@ object GlobalVersions {
     const val retrofitVersion = "2.6.4"
     const val gsonVersion = "2.8.7"
     const val time4AVersion = "4.4.4-2019c"
-    const val roomVersion = "2.3.0"
     const val okhttpVersion = "4.9.1"
     const val appCompatVersion = "1.3.0"
     const val coroutinesVersion = "1.5.0"
@@ -16,7 +15,6 @@ object GlobalVersions {
     const val navigationVersion = "2.3.5"
     const val hiltVersion = "2.38.1"
     const val materialVersion = "1.5.0-alpha02"
-    const val pagingVersion = "3.1.0"
     const val mockitoVersion = "4.1.0"
     const val junitVersion = "4.13.2"
     const val coreTestingVersion = "1.4.0"
@@ -42,8 +40,7 @@ object GlobalDependencies {
     const val navigationFragment =
         "androidx.navigation:navigation-fragment-ktx:${GlobalVersions.navigationVersion}"
     const val time4A = "net.time4j:time4j-android:${GlobalVersions.time4AVersion}"
-    const val room = "androidx.room:room-runtime:${GlobalVersions.roomVersion}"
-    const val retrofitGroupId = "com.squareup.retrofit2"
+    private const val retrofitGroupId = "com.squareup.retrofit2"
     const val retrofitConverter =
         "$retrofitGroupId:converter-gson:${GlobalVersions.retrofitVersion}"
     const val retrofit = "$retrofitGroupId:retrofit:${GlobalVersions.retrofitVersion}"
@@ -61,12 +58,6 @@ object GlobalDependencies {
     const val hiltCompiler = "com.google.dagger:hilt-android-compiler:${GlobalVersions.hiltVersion}"
 
     const val glide = "com.github.bumptech.glide:glide:${GlobalVersions.glideVersion}"
-    const val glideOkHttpIntegration =
-        "com.github.bumptech.glide:okhttp3-integration:${GlobalVersions.glideVersion}"
-    const val glideCompiler = "com.github.bumptech.glide:compiler:${GlobalVersions.glideVersion}"
-
-    const val pagingCommon = "androidx.paging:paging-common:${GlobalVersions.pagingVersion}"
-    const val pagingRuntime = "androidx.paging:paging-runtime:${GlobalVersions.pagingVersion}"
 
     const val junit = "junit:junit:${GlobalVersions.junitVersion}"
     const val mockito = "org.mockito.kotlin:mockito-kotlin:${GlobalVersions.mockitoVersion}"
