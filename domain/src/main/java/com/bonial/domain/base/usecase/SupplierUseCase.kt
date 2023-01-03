@@ -25,6 +25,6 @@ abstract class SupplierUseCase<Res> : AsynchronousUseCase<Res>() {
         dispatchFinish()
     }
 
-    protected abstract suspend fun task(): UseCaseResult<Res>
+    abstract suspend fun task(): UseCaseResult<Res>
 
 }

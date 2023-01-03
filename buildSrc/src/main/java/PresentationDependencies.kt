@@ -111,9 +111,11 @@ object PresentationDependencies {
         Pair(DependencyConfiguration.IMPLEMENTATION, GlobalDependencies.hiltAndroid),
         Pair(DependencyConfiguration.ANNOTATION_PROCESSING, GlobalDependencies.hiltCompiler),
 
-        Pair(DependencyConfiguration.IMPLEMENTATION, GlobalDependencies.junit),
-//        Pair(DependencyConfiguration.IMPLEMENTATION, GlobalDependencies.coreTesting),
-        Pair(DependencyConfiguration.IMPLEMENTATION, GlobalDependencies.mockito),
-
+        Pair(DependencyConfiguration.TEST_IMPLEMENTATION, GlobalDependencies.junit),
+        Pair(DependencyConfiguration.TEST_IMPLEMENTATION, GlobalDependencies.coreTestingKtx),
+        Pair(DependencyConfiguration.TEST_IMPLEMENTATION, GlobalDependencies.coreTesting),
+        Pair(DependencyConfiguration.TEST_IMPLEMENTATION, GlobalDependencies.mockito),
+        Pair(DependencyConfiguration.TEST_IMPLEMENTATION, GlobalDependencies.coreArchTesting),
+        Pair(DependencyConfiguration.TEST_IMPLEMENTATION, GlobalDependencies.coroutinesTest),
         )
 }

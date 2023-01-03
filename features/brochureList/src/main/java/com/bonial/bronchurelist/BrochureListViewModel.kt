@@ -19,12 +19,12 @@ class BrochureListViewModel @Inject constructor(private val brochureListUseCase:
     private val _brochureListStateLiveData = MutableLiveData<BrochuresListState>()
     val brochureListStateLiveData: LiveData<BrochuresListState>
         get() = _brochureListStateLiveData
+//
+//    init {
+//        getBrochureList()
+//    }
 
-    init {
-        getBrochureList()
-    }
-
-    private fun getBrochureList() {
+     fun getBrochureList() {
         _brochureListStateLiveData.value = LoadingState()
         viewModelScope.launch {
             brochureListUseCase.perform {

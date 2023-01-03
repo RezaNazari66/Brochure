@@ -17,9 +17,11 @@ object GlobalVersions {
     const val hiltVersion = "2.38.1"
     const val materialVersion = "1.5.0-alpha02"
     const val pagingVersion = "3.1.0"
-    const val mockitoVersion = "2.10.0"
+    const val mockitoVersion = "4.1.0"
     const val junitVersion = "4.13.2"
-//    const val coreTestingVersion = "2.1"
+    const val coreTestingVersion = "1.4.0"
+    const val coreArchTestingVersion = "2.1.0"
+    const val coroutinesTestVersion = "1.6.0"
 }
 
 object GlobalDependencies {
@@ -66,9 +68,11 @@ object GlobalDependencies {
     const val pagingCommon = "androidx.paging:paging-common:${GlobalVersions.pagingVersion}"
     const val pagingRuntime = "androidx.paging:paging-runtime:${GlobalVersions.pagingVersion}"
 
-//
     const val junit = "junit:junit:${GlobalVersions.junitVersion}"
-    const val mockito = "org.mockito:mockito-core:${GlobalVersions.mockitoVersion}"
-//    const val coreTesting = "android.arch.core:core-testing:${GlobalVersions.coreTestingVersion}"
+    const val mockito = "org.mockito.kotlin:mockito-kotlin:${GlobalVersions.mockitoVersion}"
+    const val coreTesting = "androidx.test:core:${GlobalVersions.coreTestingVersion}"
+    const val coreTestingKtx = "androidx.test:core-ktx:${GlobalVersions.coreTestingVersion}"
+    const val coreArchTesting = "androidx.arch.core:core-testing:${GlobalVersions.coreArchTestingVersion}"
+    const val coroutinesTest = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${GlobalVersions.coroutinesTestVersion}"
 
 }
