@@ -1,4 +1,4 @@
-package com.bonial.bronchurelist.composeui
+package com.bonial.brochurelist.composeui
 
 import android.content.Context
 import android.os.Bundle
@@ -26,10 +26,10 @@ import androidx.compose.ui.res.integerResource
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.viewModels
 import coil.compose.rememberImagePainter
-import com.bonial.bronchurelist.*
-import com.bonial.bronchurelist.R
+import com.bonial.brochurelist.*
 import com.bonial.domain.models.Brochure
 import dagger.hilt.android.AndroidEntryPoint
+import com.bonial.brochurelist.R
 
 @AndroidEntryPoint
 class BrochureListComposeFragment : Fragment() {

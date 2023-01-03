@@ -1,4 +1,4 @@
-package com.bonial.bronchurelist
+package com.bonial.brochurelist
 
 import com.bonial.domain.models.Brochure
 

@@ -1,4 +1,4 @@
-package com.bonial.bronchures.di
+package com.bonial.brochures.di
 
 import com.bonial.data.repositories.BrochuresRepositoryImpl
 import com.bonial.domain.repositories.BrochuresRepository

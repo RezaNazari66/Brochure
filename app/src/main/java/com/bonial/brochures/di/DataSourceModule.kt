@@ -1,4 +1,4 @@
-package com.bonial.bronchures.di
+package com.bonial.brochures.di
 
 import com.bonial.data.datasources.BrochuresRemoteDataSource
 import com.bonial.data.services.BrochuresApiServices

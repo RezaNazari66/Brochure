@@ -1,6 +1,6 @@
-package com.bonial.bronchures.di
+package com.bonial.brochures.di
 
-import com.bonial.bronchures.AppLogger
+import com.bonial.brochures.AppLogger
 import com.bonial.log.Logger
 import dagger.Binds
 import dagger.Module

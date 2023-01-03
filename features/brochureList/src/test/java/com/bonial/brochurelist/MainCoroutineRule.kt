@@ -1,4 +1,4 @@
-package com.bonial.bronchurelist
+package com.bonial.brochurelist
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

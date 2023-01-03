@@ -1,4 +1,4 @@
-package com.bonial.bronchures
+package com.bonial.brochures
 
 import timber.log.Timber
 import com.bonial.log.Logger

@@ -1,4 +1,4 @@
-package com.bonial.bronchures.di
+package com.bonial.brochures.di
 
 import com.bonial.data.dtos.brochures.ContentDto
 import com.google.gson.GsonBuilder

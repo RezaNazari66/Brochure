@@ -1,4 +1,4 @@
-package com.bonial.bronchures
+package com.bonial.brochures
 
 
 /**

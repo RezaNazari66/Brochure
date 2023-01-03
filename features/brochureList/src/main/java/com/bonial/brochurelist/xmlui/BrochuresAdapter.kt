@@ -1,4 +1,4 @@
-package com.bonial.bronchurelist.xmlui
+package com.bonial.brochurelist.xmlui
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -6,9 +6,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.bonial.bronchurelist.R
-import com.bonial.bronchurelist.databinding.ItemBrochureBinding
-import com.bonial.bronchurelist.databinding.ItemPremiumBrochureBinding
+import com.bonial.brochurelist.R
+import com.bonial.brochurelist.databinding.ItemBrochureBinding
+import com.bonial.brochurelist.databinding.ItemPremiumBrochureBinding
 import com.bonial.domain.models.Brochure
 import com.bonial.domain.models.ContentTypeEnum
 import com.bumptech.glide.Glide

@@ -1,13 +1,13 @@
-package com.bonial.bronchurelist
+package com.bonial.brochurelist
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.bonial.domain.models.Brochure
 import com.bonial.domain.models.BrochureListResponse
 import com.bonial.domain.usecases.BrochureListUseCase
-import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -70,7 +70,6 @@ internal class BrochureListViewModelTest {
                 throw java.lang.Exception()
             }
 
-
         viewModel.brochureListStateLiveData.observeForever(observerState)
 
         viewModel.getBrochureList()
@@ -93,6 +92,7 @@ internal class BrochureListViewModelTest {
     @Test
     fun getBrochureListLiveData_withoutBrochuresOrPremium_returnEmptyList() = runBlocking {
 
+        //GIVEN
         val response = BrochureListResponse(
             listOf(
                 MockedBrochures.otherBrochure,
@@ -105,14 +105,14 @@ internal class BrochureListViewModelTest {
         whenever(brochureListUseCase.executeAsync())
             .thenReturn(response)
 
-
         viewModel.brochureListStateLiveData.observeForever(observerState)
 
+        //WHEN
         viewModel.getBrochureList()
 
+
+        //THEN
         verify(brochureListUseCase).executeAsync()
-
-
         val argumentCaptor = ArgumentCaptor.forClass(BrochuresListState::class.java)
         val expectedDefaultState = DefaultState(emptyList())
 
@@ -125,6 +125,7 @@ internal class BrochureListViewModelTest {
 
     @Test
     fun getBrochureListLiveData_allBrochuresAndPremium_returnAllItems() = runBlocking {
+        //GIVEN
 
         val response = BrochureListResponse(
             listOf(
@@ -138,13 +139,13 @@ internal class BrochureListViewModelTest {
         whenever(brochureListUseCase.executeAsync())
             .thenReturn(response)
 
-
         viewModel.brochureListStateLiveData.observeForever(observerState)
 
+        //WHEN
         viewModel.getBrochureList()
 
+        //THEN
         verify(brochureListUseCase).executeAsync()
-
 
         val argumentCaptor = ArgumentCaptor.forClass(BrochuresListState::class.java)
         val expectedDefaultState = DefaultState(response.brochureList.orEmpty())
@@ -158,7 +159,7 @@ internal class BrochureListViewModelTest {
 
     @Test
     fun getBrochureListLiveData_twoBrochuresTwoOther_returnTwoBrochures() = runBlocking {
-
+        //GIVEN
         val response = BrochureListResponse(
             listOf(
                 MockedBrochures.brochure,
@@ -171,13 +172,14 @@ internal class BrochureListViewModelTest {
         whenever(brochureListUseCase.executeAsync())
             .thenReturn(response)
 
-
         viewModel.brochureListStateLiveData.observeForever(observerState)
 
+        //WHEN
         viewModel.getBrochureList()
 
-        verify(brochureListUseCase).executeAsync()
 
+        //THEN
+        verify(brochureListUseCase).executeAsync()
 
         val argumentCaptor = ArgumentCaptor.forClass(BrochuresListState::class.java)
         val expectedDefaultState =
@@ -192,19 +194,19 @@ internal class BrochureListViewModelTest {
 
     @Test
     fun getBrochureListLiveData_null_returnEmptyList() = runBlocking {
-
+        //GIVEN
         val response = BrochureListResponse(null)
 
         whenever(brochureListUseCase.executeAsync())
             .thenReturn(response)
 
-
         viewModel.brochureListStateLiveData.observeForever(observerState)
 
+        //WHEN
         viewModel.getBrochureList()
 
+        //THEN
         verify(brochureListUseCase).executeAsync()
-
 
         val argumentCaptor = ArgumentCaptor.forClass(BrochuresListState::class.java)
         val expectedDefaultState = DefaultState(emptyList())
@@ -220,9 +222,8 @@ internal class BrochureListViewModelTest {
     fun toggleFilterItem_emptyList_returnEmptyList() = runBlocking {
         //GIVEN
         val list = emptyList<Brochure>()
-
+        viewModel.brochureListStateLiveData.observeForever(observerState)
         viewModel.setBrochureListStateLiveData(list)
-
 
         //WHEN
         viewModel.toggleFilterItem()
@@ -232,9 +233,9 @@ internal class BrochureListViewModelTest {
         val expectedDefaultState = DefaultState(emptyList())
 
         argumentCaptor.run {
-            verify(observerState, times(1)).onChanged(capture())
+            verify(observerState, times(2)).onChanged(capture())
 
-            assertEquals(allValues[0], expectedDefaultState)
+            assertEquals(allValues[1], expectedDefaultState)
         }
     }
 
