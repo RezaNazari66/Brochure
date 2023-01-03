@@ -26,7 +26,8 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class BrochureListComposeFragment : Fragment() {
-
+    //todo fix bugs
+    //My time was limited and I couldn't complete this file
     private val viewModel: BrochureListViewModel by viewModels()
 
     override fun onCreateView(

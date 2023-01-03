@@ -1,6 +1,7 @@
 package com.bonial.data.dtos.brochures
 
 
+import com.bonial.domain.models.ContentTypeEnum
 import com.google.gson.*
 import com.google.gson.annotations.SerializedName
 import java.lang.reflect.Type
@@ -23,9 +24,8 @@ data class ContentDto(
             val jsonObject = json.asJsonObject
             val contentType = jsonObject.get("contentType").asString
 
-            //todo this strings repeated twice
             val contentDto: ContentDto =
-                if (contentType == "brochure" || contentType == "brochurePremium") {
+                if (contentType == ContentTypeEnum.BROCHURE.key || contentType == ContentTypeEnum.BROCHURE_PREMIUM.key) {
                     Gson().fromJson(json, ContentDto::class.java)
                 } else {
                     val contentTypeEnum =

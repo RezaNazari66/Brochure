@@ -1,7 +1,7 @@
 package com.bonial.domain.models
 
-enum class ContentTypeEnum {
-    BROCHURE,
-    BROCHURE_PREMIUM,
-    OTHER
+enum class ContentTypeEnum(val key:String) {
+    BROCHURE("brochure"),
+    BROCHURE_PREMIUM("brochurePremium"),
+    OTHER("other")
 }
