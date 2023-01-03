@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
@@ -32,10 +33,28 @@ class BrochureListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        if (!viewModel.isDataLoadedBefore) {
+            viewModel.getBrochureList()
+        }
         observeLiveData()
+
+        binding.floatingActionButton.setOnClickListener {
+            viewModel.toggleFilterItem()
+        }
     }
 
     private fun observeLiveData() {
+
+        viewModel.isNearByFilterActive.observe(viewLifecycleOwner) { isActive ->
+            val icon = if (isActive) R.drawable.ic_disable_filter else R.drawable.ic_filter
+            binding.floatingActionButton.setImageDrawable(
+                ContextCompat.getDrawable(
+                    requireContext(),
+                    icon
+                )
+            )
+        }
 
         viewModel.brochureListStateLiveData.observe(viewLifecycleOwner) { state ->
             when (state) {

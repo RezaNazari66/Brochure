@@ -2,12 +2,13 @@ package com.bonial.bronchurelist
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import com.bonial.domain.base.usecase.UseCaseResult
+import com.bonial.domain.models.Brochure
 import com.bonial.domain.models.BrochureListResponse
 import com.bonial.domain.usecases.BrochureListUseCase
 import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.ArgumentCaptor
@@ -23,30 +24,31 @@ internal class BrochureListViewModelTest {
     val coroutineRule = CoroutinesTestRule()
 
     private val brochureListUseCase = mock<BrochureListUseCase>()
-    val observerState = mock<Observer<BrochuresListState>>()
+    private val observerState = mock<Observer<BrochuresListState>>()
 
-    val viewModel by lazy { BrochureListViewModel(brochureListUseCase) }
+    private val viewModel by lazy { BrochureListViewModel(brochureListUseCase) }
 
+    @Before
+    fun initTest() {
+        reset(brochureListUseCase, observerState)
+    }
 
     @Test
-    fun getBrochureListLiveData_success() = runBlocking {
+    fun getBrochureListLiveData_returnSuccessState() = runBlocking {
+        //GIVEN
         val response = BrochureListResponse(emptyList())
 
-        whenever(brochureListUseCase.task())
-            .thenReturn(UseCaseResult(response))
-
-
-        whenever(brochureListUseCase.perform(any(), any()))
-            .then {
-
-            }
+        whenever(brochureListUseCase.executeAsync())
+            .thenReturn(response)
 
         viewModel.brochureListStateLiveData.observeForever(observerState)
 
+
+        //WHEN
         viewModel.getBrochureList()
 
-        verify(brochureListUseCase).perform()
-
+        //THEN
+        verify(brochureListUseCase).executeAsync()
 
         val argumentCaptor = ArgumentCaptor.forClass(BrochuresListState::class.java)
         val expectedLoadingState = LoadingState()
@@ -58,14 +60,267 @@ internal class BrochureListViewModelTest {
             assertEquals(loadingState, expectedLoadingState)
             assertEquals(defaultState, expectedDefaultState)
         }
-
-//        verify(observerState, times(2)).onChanged(capture())
-//        assertEquals(viewModel.brochureListStateLiveData.value, LoadingState())
-//        assertEquals(viewModel.brochureListStateLiveData.value, DefaultState(emptyList()))
     }
 
     @Test
-    fun getBrochureListLiveData_error() {
+    fun getBrochureListLiveData_returnErrorState() = runBlocking {
+
+        whenever(brochureListUseCase.executeAsync())
+            .then {
+                throw java.lang.Exception()
+            }
+
+
+        viewModel.brochureListStateLiveData.observeForever(observerState)
+
+        viewModel.getBrochureList()
+
+        verify(brochureListUseCase).executeAsync()
+
+
+        val argumentCaptor = ArgumentCaptor.forClass(BrochuresListState::class.java)
+        val expectedLoadingState = LoadingState()
+        val expectedErrorState = ErrorState("")
+
+        argumentCaptor.run {
+            verify(observerState, times(2)).onChanged(capture())
+            val (loadingState, errorState) = allValues
+            assertEquals(loadingState, expectedLoadingState)
+            assertEquals(errorState, expectedErrorState)
+        }
     }
+
+    @Test
+    fun getBrochureListLiveData_withoutBrochuresOrPremium_returnEmptyList() = runBlocking {
+
+        val response = BrochureListResponse(
+            listOf(
+                MockedBrochures.otherBrochure,
+                MockedBrochures.otherBrochure,
+                MockedBrochures.otherBrochure,
+                MockedBrochures.otherBrochure
+            )
+        )
+
+        whenever(brochureListUseCase.executeAsync())
+            .thenReturn(response)
+
+
+        viewModel.brochureListStateLiveData.observeForever(observerState)
+
+        viewModel.getBrochureList()
+
+        verify(brochureListUseCase).executeAsync()
+
+
+        val argumentCaptor = ArgumentCaptor.forClass(BrochuresListState::class.java)
+        val expectedDefaultState = DefaultState(emptyList())
+
+        argumentCaptor.run {
+            verify(observerState, times(2)).onChanged(capture())
+            val defaultState = allValues[1]
+            assertEquals(defaultState, expectedDefaultState)
+        }
+    }
+
+    @Test
+    fun getBrochureListLiveData_allBrochuresAndPremium_returnAllItems() = runBlocking {
+
+        val response = BrochureListResponse(
+            listOf(
+                MockedBrochures.brochure,
+                MockedBrochures.brochure,
+                MockedBrochures.brochure,
+                MockedBrochures.premiumBrochure
+            )
+        )
+
+        whenever(brochureListUseCase.executeAsync())
+            .thenReturn(response)
+
+
+        viewModel.brochureListStateLiveData.observeForever(observerState)
+
+        viewModel.getBrochureList()
+
+        verify(brochureListUseCase).executeAsync()
+
+
+        val argumentCaptor = ArgumentCaptor.forClass(BrochuresListState::class.java)
+        val expectedDefaultState = DefaultState(response.brochureList.orEmpty())
+
+        argumentCaptor.run {
+            verify(observerState, times(2)).onChanged(capture())
+            val defaultState = allValues[1]
+            assertEquals(defaultState, expectedDefaultState)
+        }
+    }
+
+    @Test
+    fun getBrochureListLiveData_twoBrochuresTwoOther_returnTwoBrochures() = runBlocking {
+
+        val response = BrochureListResponse(
+            listOf(
+                MockedBrochures.brochure,
+                MockedBrochures.brochure,
+                MockedBrochures.otherBrochure,
+                MockedBrochures.otherBrochure
+            )
+        )
+
+        whenever(brochureListUseCase.executeAsync())
+            .thenReturn(response)
+
+
+        viewModel.brochureListStateLiveData.observeForever(observerState)
+
+        viewModel.getBrochureList()
+
+        verify(brochureListUseCase).executeAsync()
+
+
+        val argumentCaptor = ArgumentCaptor.forClass(BrochuresListState::class.java)
+        val expectedDefaultState =
+            DefaultState(listOf(MockedBrochures.brochure, MockedBrochures.brochure))
+
+        argumentCaptor.run {
+            verify(observerState, times(2)).onChanged(capture())
+            val defaultState = allValues[1]
+            assertEquals(defaultState, expectedDefaultState)
+        }
+    }
+
+    @Test
+    fun getBrochureListLiveData_null_returnEmptyList() = runBlocking {
+
+        val response = BrochureListResponse(null)
+
+        whenever(brochureListUseCase.executeAsync())
+            .thenReturn(response)
+
+
+        viewModel.brochureListStateLiveData.observeForever(observerState)
+
+        viewModel.getBrochureList()
+
+        verify(brochureListUseCase).executeAsync()
+
+
+        val argumentCaptor = ArgumentCaptor.forClass(BrochuresListState::class.java)
+        val expectedDefaultState = DefaultState(emptyList())
+
+        argumentCaptor.run {
+            verify(observerState, times(2)).onChanged(capture())
+            val defaultState = allValues[1]
+            assertEquals(defaultState, expectedDefaultState)
+        }
+    }
+
+    @Test
+    fun toggleFilterItem_emptyList_returnEmptyList() = runBlocking {
+        //GIVEN
+        val list = emptyList<Brochure>()
+
+        viewModel.setBrochureListStateLiveData(list)
+
+
+        //WHEN
+        viewModel.toggleFilterItem()
+
+        //THEN
+        val argumentCaptor = ArgumentCaptor.forClass(BrochuresListState::class.java)
+        val expectedDefaultState = DefaultState(emptyList())
+
+        argumentCaptor.run {
+            verify(observerState, times(1)).onChanged(capture())
+
+            assertEquals(allValues[0], expectedDefaultState)
+        }
+    }
+
+    @Test
+    fun toggleFilterItem_allItemsAreNear_returnAll() = runBlocking {
+        //GIVEN
+        val list =
+            listOf(
+                MockedBrochures.brochure,
+                MockedBrochures.brochure,
+                MockedBrochures.brochure,
+            )
+
+        viewModel.brochureListStateLiveData.observeForever(observerState)
+        viewModel.setBrochureListStateLiveData(list)
+
+        //WHEN
+        viewModel.toggleFilterItem()
+
+        //THEN
+        val argumentCaptor = ArgumentCaptor.forClass(BrochuresListState::class.java)
+        val expectedDefaultState = DefaultState(list)
+
+        argumentCaptor.run {
+            verify(observerState, times(2)).onChanged(capture())
+            assertEquals(allValues[1], expectedDefaultState)
+        }
+    }
+
+    @Test
+    fun toggleFilterItem_twoItemNear_returnTwoItem() = runBlocking {
+        //GIVEN
+        val list =
+            listOf(
+                MockedBrochures.brochure,
+                MockedBrochures.brochure,
+                MockedBrochures.brochureLongDistance,
+                MockedBrochures.brochureLongDistance
+            )
+
+        viewModel.brochureListStateLiveData.observeForever(observerState)
+        viewModel.setBrochureListStateLiveData(list)
+
+        //WHEN
+        viewModel.toggleFilterItem()
+
+        //THEN
+        val argumentCaptor = ArgumentCaptor.forClass(BrochuresListState::class.java)
+        val expectedDefaultState = DefaultState(
+            listOf(
+                MockedBrochures.brochure,
+                MockedBrochures.brochure,
+            )
+        )
+
+        argumentCaptor.run {
+            verify(observerState, times(2)).onChanged(capture())
+            assertEquals(allValues[1], expectedDefaultState)
+        }
+    }
+
+    @Test
+    fun toggleFilterItem_NoItemNear_returnEmptyList() = runBlocking {
+        //GIVEN
+        val list =
+            listOf(
+                MockedBrochures.brochureLongDistance,
+                MockedBrochures.brochureLongDistance,
+                MockedBrochures.brochureLongDistance
+            )
+
+        viewModel.brochureListStateLiveData.observeForever(observerState)
+        viewModel.setBrochureListStateLiveData(list)
+
+        //WHEN
+        viewModel.toggleFilterItem()
+
+        //THEN
+        val argumentCaptor = ArgumentCaptor.forClass(BrochuresListState::class.java)
+        val expectedDefaultState = DefaultState(emptyList())
+
+        argumentCaptor.run {
+            verify(observerState, times(2)).onChanged(capture())
+            assertEquals(allValues[1], expectedDefaultState)
+        }
+    }
+
 
 }

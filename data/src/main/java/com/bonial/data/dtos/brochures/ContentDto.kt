@@ -9,7 +9,7 @@ data class ContentDto(
     @SerializedName("contentType")
     val contentType: ContentTypeDto?,
     @SerializedName("content")
-    val innerContent: InnerContentDto?
+    val innerContent: InnerContentDto?,
 ) {
 
     class ContentDtoDeserializer : JsonDeserializer<ContentDto?> {
@@ -30,7 +30,10 @@ data class ContentDto(
                 } else {
                     val contentTypeEnum =
                         Gson().fromJson(jsonObject.get("contentType"), ContentTypeDto::class.java)
-                    ContentDto(contentType = contentTypeEnum, innerContent = null)
+                    ContentDto(
+                        contentType = contentTypeEnum,
+                        innerContent = null,
+                    )
                 }
             return contentDto
         }

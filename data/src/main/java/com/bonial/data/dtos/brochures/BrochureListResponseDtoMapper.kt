@@ -15,7 +15,8 @@ class BrochureListResponseDtoMapper @Inject constructor() :
                 Brochure(
                     image = it.innerContent?.brochureImage.orEmpty(),
                     retailerName = it.innerContent?.retailer?.name.orEmpty(),
-                    contentType = mapContentType(it.contentType)
+                    contentType = mapContentType(it.contentType),
+                    distance = it.innerContent?.distance
                 )
             },
         )

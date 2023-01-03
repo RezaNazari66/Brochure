@@ -8,4 +8,6 @@ data class InnerContentDto(
     val brochureImage: String?,
     @SerializedName("retailer")
     val retailer: RetailerDto?,
+    @SerializedName("distance")
+    val distance: Double?,
 )

@@ -19,31 +19,56 @@ class BrochureListViewModel @Inject constructor(private val brochureListUseCase:
     private val _brochureListStateLiveData = MutableLiveData<BrochuresListState>()
     val brochureListStateLiveData: LiveData<BrochuresListState>
         get() = _brochureListStateLiveData
-//
-//    init {
-//        getBrochureList()
-//    }
 
-     fun getBrochureList() {
+    private var backupBrochureList: List<Brochure>? = null
+
+    private val _isNearByFilterActive = MutableLiveData<Boolean>(false)
+    val isNearByFilterActive: LiveData<Boolean>
+        get() = _isNearByFilterActive
+
+    var isDataLoadedBefore = false
+
+    fun getBrochureList() {
         _brochureListStateLiveData.value = LoadingState()
         viewModelScope.launch {
-            brochureListUseCase.perform {
-                onSuccess = {
-                    _brochureListStateLiveData.value =
-                        DefaultState(filterListByContentType(it.data))
-                }
-                onError = {
-                    it.printStackTrace()
-                    _brochureListStateLiveData.value =
-                        ErrorState(it.message.orEmpty())
-                }
+            _brochureListStateLiveData.value = try {
+                DefaultState(filterListByContentType(brochureListUseCase.executeAsync()))
+            } catch (e: Exception) {
+                ErrorState(e.message.orEmpty())
             }
+            isDataLoadedBefore = true
         }
     }
 
     private fun filterListByContentType(data: BrochureListResponse): List<Brochure> {
         return data.brochureList?.filter { it.contentType == ContentTypeEnum.BROCHURE || it.contentType == ContentTypeEnum.BROCHURE_PREMIUM }
             ?: emptyList()
+    }
+
+    fun toggleFilterItem() {
+        if (isNearByFilterActive.value == true) {
+            disableFilterNearItems()
+        } else {
+            enableFilterNearItems()
+        }
+    }
+
+    private fun enableFilterNearItems() {
+        backupBrochureList = brochureListStateLiveData.value?.data
+        val filteredItemList = brochureListStateLiveData.value?.data?.filter {
+            it.distance != null && it.distance!! < 5
+        }
+        setBrochureListStateLiveData(filteredItemList ?: emptyList())
+        _isNearByFilterActive.value = true
+    }
+
+    private fun disableFilterNearItems() {
+        setBrochureListStateLiveData(backupBrochureList)
+        _isNearByFilterActive.value = false
+    }
+
+    fun setBrochureListStateLiveData(brochureList: List<Brochure>?) {
+        _brochureListStateLiveData.value = DefaultState(brochureList.orEmpty())
     }
 
 }

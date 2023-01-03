@@ -1,15 +1,15 @@
 package com.bonial.domain.usecases
 
-import com.bonial.domain.base.usecase.SupplierUseCase
-import com.bonial.domain.base.usecase.UseCaseResult
 import com.bonial.domain.models.BrochureListResponse
 import com.bonial.domain.repositories.BrochuresRepository
+import com.bonial.domain.base.usecase.base.AsyncSuspendUseCaseNoParam
 import javax.inject.Inject
 
 class BrochureListUseCase  @Inject constructor(private val repository: BrochuresRepository) :
-    SupplierUseCase<BrochureListResponse>() {
+    AsyncSuspendUseCaseNoParam<BrochureListResponse> {
 
-    override suspend fun task(): UseCaseResult<BrochureListResponse> {
-        return UseCaseResult(repository.fetchBrochureList())
-    }
+    override suspend fun executeAsync(): BrochureListResponse =
+        repository.fetchBrochureList()
+
+
 }
