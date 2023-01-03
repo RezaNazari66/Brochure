@@ -64,7 +64,7 @@ object PresentationDependencies {
         "io.coil-kt:coil-compose:${PresentationVersions.coilVersion}"
 
     private const val composeRuntimeLiveData =
-        "androidx.compose.runtime:runtime-livedata:1.0.0-beta01"
+        "androidx.compose.runtime:runtime-livedata:${PresentationVersions.composeVersion}"
 
     val dependencyNotation = arrayOf(
         Pair(DependencyConfiguration.IMPLEMENTATION, GlobalDependencies.core),
