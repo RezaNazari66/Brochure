@@ -43,9 +43,10 @@ dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar", "*.aar"))))
     implementation(project(":log"))
     implementation(project(":domain"))
+    implementation(project(":shared"))
 
     PresentationDependencies.dependencyNotation.forEach {
-        if(it.first == DependencyConfiguration.IMPLEMENTATION_PLATFORM)
+        if (it.first == DependencyConfiguration.IMPLEMENTATION_PLATFORM)
             this.add(DependencyConfiguration.IMPLEMENTATION, platform(it.second))
         else
             this.add(it.first, it.second)

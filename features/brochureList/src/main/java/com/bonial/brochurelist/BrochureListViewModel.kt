@@ -8,6 +8,7 @@ import com.bonial.domain.models.Brochure
 import com.bonial.domain.models.BrochureListResponse
 import com.bonial.domain.models.ContentTypeEnum
 import com.bonial.domain.usecases.BrochureListUseCase
+import com.bonial.shared.sharedmodel.executeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -31,11 +32,11 @@ class BrochureListViewModel @Inject constructor(private val brochureListUseCase:
     fun getBrochureList() {
         _brochureListStateLiveData.value = LoadingState()
         viewModelScope.launch {
-            _brochureListStateLiveData.value = try {
-                DefaultState(filterListByContentType(brochureListUseCase.executeAsync()))
-            } catch (e: Exception) {
-                ErrorState(e.message.orEmpty())
-            }
+            _brochureListStateLiveData.value =
+                brochureListUseCase.executeAsync().executeUseCase(
+                    ifSuccess = { DefaultState(filterListByContentType(it)) },
+                    ifError = { ErrorState(errorMessage = it.message) }
+                )
             isDataLoadedBefore = true
         }
     }

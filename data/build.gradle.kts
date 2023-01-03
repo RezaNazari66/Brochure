@@ -13,6 +13,7 @@ dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     implementation(project(":log"))
     implementation(project(":domain"))
+    implementation(project(":shared"))
     DataDependencies.dependencyNotation.forEach {
         this.add(it.first, it.second)
     }

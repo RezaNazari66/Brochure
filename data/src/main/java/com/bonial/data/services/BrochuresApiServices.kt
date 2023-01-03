@@ -10,7 +10,6 @@ class BrochuresApiServices @Inject constructor(
     private val brochureListResponseDtoMapper: BrochureListResponseDtoMapper,
 ) : BaseApiService<BrochuresEndPoints>(BrochuresEndPoints::class.java), BrochuresRemoteDataSource {
 
-
     override suspend fun fetchBrochureList(): BrochureListResponse =
         brochureListResponseDtoMapper.mapToDataModel(executionWithMessage { apiService.fetchBrochureList() }.data)
 

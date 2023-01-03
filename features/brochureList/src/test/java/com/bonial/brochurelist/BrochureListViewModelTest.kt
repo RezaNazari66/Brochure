@@ -5,6 +5,8 @@ import androidx.lifecycle.Observer
 import com.bonial.domain.models.Brochure
 import com.bonial.domain.models.BrochureListResponse
 import com.bonial.domain.usecases.BrochureListUseCase
+import com.bonial.shared.sharedmodel.RestErrorResponse
+import com.bonial.shared.sharedmodel.ResultModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
@@ -39,7 +41,7 @@ internal class BrochureListViewModelTest {
         val response = BrochureListResponse(emptyList())
 
         whenever(brochureListUseCase.executeAsync())
-            .thenReturn(response)
+            .thenReturn(ResultModel.Success(response))
 
         viewModel.brochureListStateLiveData.observeForever(observerState)
 
@@ -66,9 +68,8 @@ internal class BrochureListViewModelTest {
     fun getBrochureListLiveData_returnErrorState() = runBlocking {
 
         whenever(brochureListUseCase.executeAsync())
-            .then {
-                throw java.lang.Exception()
-            }
+            .thenReturn(ResultModel.Error(RestErrorResponse(0,"")))
+
 
         viewModel.brochureListStateLiveData.observeForever(observerState)
 
@@ -103,7 +104,7 @@ internal class BrochureListViewModelTest {
         )
 
         whenever(brochureListUseCase.executeAsync())
-            .thenReturn(response)
+            .thenReturn(ResultModel.Success(response))
 
         viewModel.brochureListStateLiveData.observeForever(observerState)
 
@@ -137,7 +138,7 @@ internal class BrochureListViewModelTest {
         )
 
         whenever(brochureListUseCase.executeAsync())
-            .thenReturn(response)
+            .thenReturn(ResultModel.Success(response))
 
         viewModel.brochureListStateLiveData.observeForever(observerState)
 
@@ -170,7 +171,7 @@ internal class BrochureListViewModelTest {
         )
 
         whenever(brochureListUseCase.executeAsync())
-            .thenReturn(response)
+            .thenReturn(ResultModel.Success(response))
 
         viewModel.brochureListStateLiveData.observeForever(observerState)
 
@@ -198,7 +199,7 @@ internal class BrochureListViewModelTest {
         val response = BrochureListResponse(null)
 
         whenever(brochureListUseCase.executeAsync())
-            .thenReturn(response)
+            .thenReturn(ResultModel.Success(response))
 
         viewModel.brochureListStateLiveData.observeForever(observerState)
 
